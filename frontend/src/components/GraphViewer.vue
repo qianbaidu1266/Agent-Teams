@@ -420,7 +420,7 @@ function nodeIcon(node) {
   if (node.kind === "logic") {
     if (node.id === "supervisor_intake") return Waypoints;
     if (node.id === "delegation_policy") return Route;
-    if (node.id === "supervisor_review") return Eye;
+    if (node.id === "supervisor_review") return BrainCircuit;
     return BrainCircuit;
   }
   if (node.kind === "agent") return Bot;
