@@ -930,6 +930,7 @@ def run_peer_handoff(
             f"Starting workflow: {workflow.name}",
             workflow_id=workflow.id,
             workflow_type=workflow.type,
+            node_id="start",
         ),
     )
 
@@ -1433,6 +1434,7 @@ def run_peer_handoff(
             "Workflow completed.",
             workflow_id=workflow.id,
             terminal_status=final_state.get("terminal_status", "complete"),
+            node_id="end",
         ),
     )
 

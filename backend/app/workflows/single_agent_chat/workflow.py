@@ -219,6 +219,7 @@ def run_single_agent_chat(
             f"Starting workflow: {workflow.name}",
             workflow_id=workflow.id,
             workflow_type=workflow.type,
+            node_id="start",
         ),
     )
 
@@ -320,6 +321,7 @@ def run_single_agent_chat(
             "Run Finished",
             "Workflow completed.",
             workflow_id=workflow.id,
+            node_id="end",
         ),
     )
 
