@@ -1,6 +1,6 @@
 <script setup>
 import { computed, inject, nextTick, ref, watch } from "vue";
-import { Bot, BrainCircuit, GitBranch, Sparkles, Terminal } from "lucide-vue-next";
+import { Bot, BrainCircuit, GitBranch, Route, Sparkles, Terminal, Waypoints } from "lucide-vue-next";
 import { I18N_KEY } from "../i18n";
 
 const props = defineProps({
@@ -269,22 +269,22 @@ function actorMetaFromEvent(event) {
   if (nodeId) {
     const label = nodeLabel(nodeId);
     if (nodeId === "router" || nodeId.includes("router")) {
-      return { key: `routing:${nodeId}`, label, subtitle: "Routing Trace Card", kind: "logic" };
+      return { key: `routing:${nodeId}`, label, subtitle: "Routing Trace Card", kind: "logic", nodeId };
     }
     if (nodeId === "finalize" || nodeId === "synthesizer") {
-      return { key: `finalize:${nodeId}`, label, subtitle: "Final Response Card", kind: "finalize" };
+      return { key: `finalize:${nodeId}`, label, subtitle: "Final Response Card", kind: "finalize", nodeId };
     }
     if (nodeId === "start" || nodeId === "end") {
-      return { key: `system:${nodeId}`, label, subtitle: "System Trace Card", kind: "system" };
+      return { key: `system:${nodeId}`, label, subtitle: "System Trace Card", kind: "system", nodeId };
     }
-    return { key: `node:${nodeId}`, label, subtitle: "Workflow Trace Card", kind: stage === "tool" ? "tool" : "logic" };
+    return { key: `node:${nodeId}`, label, subtitle: "Workflow Trace Card", kind: stage === "tool" ? "tool" : "logic", nodeId };
   }
 
   if (stage === "tool") {
     return { key: "tool-runtime", label: "Tool Runtime", subtitle: "Tool Trace Card", kind: "tool" };
   }
 
-  return { key: "system-runtime", label: "System Entry", subtitle: "System Trace Card", kind: "system" };
+  return { key: "system-runtime", label: "System Entry", subtitle: "System Trace Card", kind: "system", nodeId };
 }
 
 function stepFromEvent(event, idPrefix) {
@@ -456,9 +456,13 @@ function formatTime(isoString) {
   }
 }
 
-function actorIcon(kind) {
+function actorIcon(kind, nodeId) {
   if (kind === "agent") return Bot;
-  if (kind === "logic") return BrainCircuit;
+  if (kind === "logic") {
+    if (nodeId === "supervisor_intake") return Waypoints;
+    if (nodeId === "delegation_policy") return Route;
+    return BrainCircuit;
+  }
   if (kind === "finalize") return Sparkles;
   if (kind === "tool") return Terminal;
   return GitBranch;
@@ -516,7 +520,7 @@ watch(
             <div class="trace-group-head">
               <div class="trace-group-identity">
                 <div class="trace-group-icon">
-                  <component :is="actorIcon(group.kind)" :size="16" />
+                  <component :is="actorIcon(group.kind, group.nodeId)" :size="16" />
                 </div>
                 <div>
                   <strong class="trace-group-title">{{ group.label }}</strong>
