@@ -176,36 +176,42 @@ function layoutPeerHandoff(nodes, width, height) {
   placeNode(result, map, "start", width * 0.5, height * 0.08);
   placeNode(result, map, "first_owner_router", width * 0.5, height * 0.23);
 
-  const groupWidth = Math.min(width * 0.74, Math.max(340, width * 0.68));
-  const groupHeight = Math.min(height * 0.5, Math.max(210, height * 0.42));
+  const groupWidth = Math.min(width * 0.78, Math.max(380, width * 0.72));
+  const groupHeight = Math.min(height * 0.56, Math.max(260, height * 0.48));
   if (groupNode) {
     result.push({
       ...groupNode,
       x: width * 0.5,
-      y: height * (finalNode ? 0.54 : 0.6),
+      y: height * (finalNode ? 0.55 : 0.62),
       boxWidth: groupWidth,
       boxHeight: groupHeight,
     });
   }
 
   if (agents.length) {
-    const columns = Math.min(3, agents.length);
-    const rows = Math.ceil(agents.length / columns);
-    const innerLeft = width * 0.5 - groupWidth / 2 + 82;
-    const innerRight = width * 0.5 + groupWidth / 2 - 82;
-    const innerTop = (groupNode ? height * (finalNode ? 0.54 : 0.6) : height * 0.58) - groupHeight / 2 + 74;
-    const innerBottom = (groupNode ? height * (finalNode ? 0.54 : 0.6) : height * 0.58) + groupHeight / 2 - 58;
+    const centerX = width * 0.5;
+    const centerY = height * (finalNode ? 0.55 : 0.62);
+    const radiusX = Math.min(groupWidth * 0.32, 120);
+    const radiusY = Math.min(groupHeight * 0.32, 80);
 
-    agents.forEach((node, index) => {
-      const column = columns === 1 ? 0 : index % columns;
-      const row = Math.floor(index / columns);
-      const x = columns === 1 ? width * 0.5 : innerLeft + ((innerRight - innerLeft) * column) / (columns - 1);
-      const y = rows === 1 ? (innerTop + innerBottom) / 2 : innerTop + ((innerBottom - innerTop) * row) / (rows - 1);
-      result.push({ ...node, x, y });
-    });
+    if (agents.length === 2) {
+      result.push({ ...agents[0], x: centerX - radiusX, y: centerY });
+      result.push({ ...agents[1], x: centerX + radiusX, y: centerY });
+    } else if (agents.length === 3) {
+      result.push({ ...agents[0], x: centerX, y: centerY - radiusY });
+      result.push({ ...agents[1], x: centerX - radiusX * 0.9, y: centerY + radiusY * 0.5 });
+      result.push({ ...agents[2], x: centerX + radiusX * 0.9, y: centerY + radiusY * 0.5 });
+    } else {
+      agents.forEach((node, index) => {
+        const angle = (index / agents.length) * 2 * Math.PI - Math.PI / 2;
+        const x = centerX + radiusX * Math.cos(angle);
+        const y = centerY + radiusY * Math.sin(angle);
+        result.push({ ...node, x, y });
+      });
+    }
   }
 
-  if (finalNode) placeNode(result, map, "finalize", width * 0.5, height * 0.86);
+  if (finalNode) placeNode(result, map, "finalize", width * 0.5, height * 0.88);
   if (endNode) placeNode(result, map, "end", width * 0.5, height * 0.95);
   return result;
 }
