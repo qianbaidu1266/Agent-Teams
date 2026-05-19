@@ -1,0 +1,9 @@
+{
+  "id": "skill_fb73573a",
+  "name": "skill-creator",
+  "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Gemini CLI's capabilities with specialized knowledge,...",
+  "instruction": "You can use the 'skill-creator' skill when relevant. If external tools are needed, ask user to configure access first.",
+  "source_provider": "skillhub",
+  "source_skill_id": "e464ea03-017b-45d2-bd36-d64694c4bb3f",
+  "local_path": "/Users/yangchao/Desktop/openproject/multi-agent/Multi-Agent-Playground/backend/skills/skill-creator__skill_fb73573a"
+}

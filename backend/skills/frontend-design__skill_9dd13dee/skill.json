@@ -1,0 +1,9 @@
+{
+  "id": "skill_9dd13dee",
+  "name": "frontend-design",
+  "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications. Generates c...",
+  "instruction": "You can use the 'frontend-design' skill when relevant. If external tools are needed, ask user to configure access first.",
+  "source_provider": "skillhub",
+  "source_skill_id": "2039ac37-1f04-4e12-a78c-69018aa074c4",
+  "local_path": "/Users/yangchao/Desktop/openproject/multi-agent/Multi-Agent-Playground/backend/skills/frontend-design__skill_9dd13dee"
+}

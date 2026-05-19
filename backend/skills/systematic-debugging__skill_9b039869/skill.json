@@ -1,0 +1,9 @@
+{
+  "id": "skill_9b039869",
+  "name": "systematic-debugging",
+  "description": "A structured methodology for debugging software issues that enforces root cause analysis before proposing fixes. It provides a four-phase process with concrete steps, common pitfalls to avoid, and...",
+  "instruction": "You can use the 'systematic-debugging' skill when relevant. If external tools are needed, ask user to configure access first.",
+  "source_provider": "skillhub",
+  "source_skill_id": "4850d5ac-eae4-4cc3-becb-7e6cec4f816d",
+  "local_path": "/Users/yangchao/Desktop/openproject/multi-agent/Multi-Agent-Playground/backend/skills/systematic-debugging__skill_9b039869"
+}
