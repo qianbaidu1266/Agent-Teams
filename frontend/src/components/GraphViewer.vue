@@ -15,11 +15,13 @@ import {
   Network,
   PencilLine,
   Rocket,
+  Route,
   Search,
   Shield,
   Sparkles,
   Star,
   Wand2,
+  Waypoints,
   Zap,
 } from "lucide-vue-next";
 import { I18N_KEY } from "../i18n";
@@ -415,7 +417,12 @@ function nodeIcon(node) {
   if (node.kind === "agent" && node.icon && graphIconMap[node.icon]) {
     return graphIconMap[node.icon];
   }
-  if (node.kind === "logic") return BrainCircuit;
+  if (node.kind === "logic") {
+    if (node.id === "supervisor_intake") return Waypoints;
+    if (node.id === "delegation_policy") return Route;
+    if (node.id === "supervisor_review") return Eye;
+    return BrainCircuit;
+  }
   if (node.kind === "agent") return Bot;
   if (node.kind === "final") return Zap;
   return null;
