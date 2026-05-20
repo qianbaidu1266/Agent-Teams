@@ -1,3 +1,35 @@
+"""
+Peer Handoff Workflow - 蜂群模式（Agent 自主性）
+===============================================
+
+模式：START → Router → Agent A → [Agent B → ...] → Finalizer → END
+
+重要：first_owner_router 不是 Supervisor！
+- 它只选择第一个 agent
+- 不参与后续决策
+- agents 自己决定下一步
+
+特点：
+- First Owner Router 选择初始 agent（仅一次）
+- Agent 执行并自主决定下一步动作
+- Agent 可以 handoff 给其他 agent、继续或完成
+- 无中央 supervisor - agents 地位平等
+
+Agent 动作：
+- continue: 继续当前任务
+- handoff: 传递给其他 agent
+- complete: 任务完成
+- respond_user: 直接响应用户
+- block: 无法继续
+
+使用场景：需要灵活协作、动态任务调整、agent 间 handoff
+
+对比其他模式：
+- vs supervisor_dynamic: 无中央控制，agent 自主性
+- vs planner_executor: 动态 handoff，非顺序
+- vs router_specialists: 多 agent，handoff 能力
+"""
+
 from __future__ import annotations
 
 import json

@@ -1,3 +1,26 @@
+"""
+Runtime Module - LLM Gateway and Tool Execution Engine
+========================================================
+
+核心功能：
+1. LLMGateway - LLM 交互网关，提供路由、规划、执行能力
+2. Tool Execution - 工具执行引擎，支持 Skill 工具和内置文件系统工具
+3. Runtime Environment - 运行时环境管理，Python/Node.js 运行时准备
+
+主要方法：
+- route(): 选择最佳 agent 处理用户请求
+- plan_tasks(): 将用户请求分解为任务列表
+- supervisor_review_decision(): 监督循环控制决策
+- run_agent(): 执行 agent 及其工具
+- finalize(): 生成最终用户响应
+
+工作流使用：
+- router_specialists: route() + run_agent() + finalize()
+- planner_executor: plan_tasks() + run_agent()
+- supervisor_dynamic: supervisor_review_decision() + run_agent()
+- peer_handoff: run_agent() + handoff 决策逻辑
+"""
+
 from __future__ import annotations
 
 import base64
@@ -30,6 +53,31 @@ _log = logging.getLogger("multi_agent_runtime")
 
 
 class LLMGateway:
+    """
+    LLM Gateway - LLM 交互和工具执行的中央网关
+    
+    核心能力：
+    1. LLM 路由和规划决策
+    2. Agent 执行与工具支持
+    3. 内置文件系统能力
+    4. Skill 工具执行 (Python/Node 脚本)
+    
+    主要方法：
+        route(user_input, agents) -> (agent_id, reason)
+            选择最佳 agent 处理请求，用于 router_specialists 工作流
+            
+        plan_tasks(user_input, max_tasks) -> (tasks, source)
+            分解用户请求为任务列表，用于 planner_executor 工作流
+            
+        supervisor_review_decision(...) -> (continue, next_focus, reason)
+            决定是否继续监督循环，用于 supervisor_dynamic 工作流
+            
+        run_agent(agent, user_input, ...) -> str
+            执行 agent 及其配置的工具，所有工作流都使用
+            
+        finalize(user_input, agent, answer) -> str
+            生成最终用户响应，有 finalizer 的工作流使用
+    """
     _TOOL_BLOCKED_MARKER = "TOOL_EXECUTION_BLOCKED"
     _TOOL_NO_FINAL_MARKER = "TOOL_EXECUTION_NO_FINAL_ANSWER"
     _INTENT_KEYWORDS: dict[str, tuple[str, ...]] = {

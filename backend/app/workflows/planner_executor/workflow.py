@@ -1,3 +1,24 @@
+"""
+Planner Executor Workflow - 流水线模式（任务分解）
+=================================================
+
+模式：START → Planner → Validator → Dispatcher → Workers → Synthesizer → END
+
+特点：
+- Planner 分解请求为任务列表
+- Validator 检查计划质量
+- Dispatcher 顺序分配任务给 workers
+- Workers 依次执行任务
+- Synthesizer 合并所有结果
+
+使用场景：复杂、多阶段任务，需要顺序执行
+
+对比其他模式：
+- vs supervisor_dynamic: 固定任务列表，无动态焦点
+- vs router_specialists: 多任务，顺序执行
+- vs peer_handoff: 中央控制，无 agent 自主性
+"""
+
 from __future__ import annotations
 
 from collections.abc import Callable

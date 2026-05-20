@@ -1,3 +1,21 @@
+"""
+Single Agent Chat Workflow - 单 Agent 模式
+==========================================
+
+模式：START → Agent → END
+
+特点：
+- 用户输入直接发送给单个 agent
+- Agent 使用其工具和能力响应
+- 无路由、无 handoff、无循环
+
+使用场景：简单聊天场景、单一目的 agent、直接用户-agent 交互
+
+对比其他模式：
+- vs router_specialists: 无路由
+- vs 所有其他模式: 单 agent，无协作
+"""
+
 from __future__ import annotations
 
 from collections.abc import Callable

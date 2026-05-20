@@ -1,3 +1,22 @@
+"""
+Router Specialists Workflow - 单跳路由模式
+==========================================
+
+模式：START → Router → Specialist → Finalizer → END
+
+特点：
+- 中央 Router 选择一个 specialist agent
+- specialist 处理整个请求
+- 无循环，单次执行
+
+使用场景：简单、单一目标的请求
+
+对比其他模式：
+- vs supervisor_dynamic: 无循环，单次执行
+- vs planner_executor: 无任务分解
+- vs peer_handoff: 无 agent handoff
+"""
+
 from __future__ import annotations
 
 from collections.abc import Callable

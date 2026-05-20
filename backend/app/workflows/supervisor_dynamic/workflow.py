@@ -1,3 +1,24 @@
+"""
+Supervisor Dynamic Workflow - 监督模式（中央控制循环）
+======================================================
+
+模式：START → Intake → [Delegation → Worker → Review] × N → Finalizer → END
+
+特点：
+- Supervisor Intake 接收请求并估算最大循环次数
+- Delegation Policy 选择 worker 和焦点任务
+- Worker 执行并报告
+- Supervisor Review 评估并决定继续或停止
+- 循环直到最大次数或任务完成
+
+使用场景：需要多轮迭代、动态任务分配、质量驱动完成
+
+对比其他模式：
+- vs router_specialists: 有循环，动态分配
+- vs planner_executor: 动态焦点，非固定任务
+- vs peer_handoff: 中央控制，无 agent 自主性
+"""
+
 from __future__ import annotations
 
 import json
